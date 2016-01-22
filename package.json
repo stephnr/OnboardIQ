@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "A node.js client for the OnboardIQ API",
   "main": "index.js",
+  "engines": {
+    "node": ">=4.x"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node test/onboardAPI.js"
   },
   "homepage": "https://github.com/Stephn-R/OnboardIQ",
   "bugs": {
@@ -19,10 +23,13 @@
     "url": "https://github.com/Stephn-R/OnboardIQ.git"
   },
   "keywords": [
-  	"onboardiq",
-  	"onboard",
-  	"iq",
-  	"api"
+    "onboardiq",
+    "onboard",
+    "iq",
+    "api"
   ],
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "request": "2.67.0"
+  }
 }
