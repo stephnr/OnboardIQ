@@ -1,0 +1,28 @@
+{
+  "name": "onboardiq",
+  "version": "1.0.0",
+  "description": "A node.js client for the OnboardIQ API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/Stephn-R/OnboardIQ",
+  "bugs": {
+    "url": "https://github.com/Stephn-R/OnboardIQ/issues",
+    "email": "steprodriguez10@gmail.com"
+  },
+  "author": "Stephen Rodriguez <steprodriguez10@gmail.com> (http://www.stephenrodriguez.info/)",
+  "contributors": [],
+  "files": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Stephn-R/OnboardIQ.git"
+  },
+  "keywords": [
+  	"onboardiq",
+  	"onboard",
+  	"iq",
+  	"api"
+  ],
+  "license": "SEE LICENSE IN LICENSE"
+}
