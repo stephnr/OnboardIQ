@@ -72,7 +72,7 @@ describe('OnboardIQ', function() {
           var found = false;
 
           resp.applicants.forEach(function(el) {
-            if(el.key === newApplicant.key) {
+            if(el.id === newApplicant.id) {
               found = true;
             }
           });
