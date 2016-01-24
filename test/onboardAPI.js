@@ -42,40 +42,70 @@ describe('OnboardIQ', function() {
         any: 'other',
         keys: 'that you might want'
       }).then(function(resp) {
-        assert.equal(resp.statusCode, 200, 'successfully created applicant');
+        expect(resp.statusCode).to.match(/^20(0|1)$/);
         newApplicant = resp.data;
         return newApplicant;
       });
     });
 
     it('should be able to update an applicant', function() {
-      Client.updateApplicant(newApplicant.key, {
-        name: 'John'
-      }).then(function(applicant) {
-        assert.equal(applicant.data.name, 'John');
-        newApplicant = applicant;
-      });
+      if(process.env.API_VERSION === 'v2') {
+        Client.updateApplicant(newApplicant.id, {
+          name: 'John'
+        }).then(function(applicant) {
+          assert.equal(applicant.data.name, 'John');
+          newApplicant = applicant;
+        });
+      } else {
+        Client.updateApplicant(newApplicant.key, {
+          name: 'John'
+        }).then(function(applicant) {
+          assert.equal(applicant.data.name, 'John');
+          newApplicant = applicant;
+        });
+      }
     });
 
     it('should be able to list applicants', function() {
-      Client.listApplicants().then(function(resp) {
-        var found = false;
+      if(process.env.API_VERSION === 'v2') {
+        Client.listApplicants().then(function(resp) {
+          var found = false;
 
-        resp.data.forEach(function(el) {
-          if(el.key === newApplicant.key) {
-            found = true;
-          }
+          resp.applicants.forEach(function(el) {
+            if(el.key === newApplicant.key) {
+              found = true;
+            }
+          });
+
+          assert.isTrue(found, 'the record exists');
         });
+      } else {
+        Client.listApplicants().then(function(resp) {
+          var found = false;
 
-        assert.isTrue(found, 'the record exists');
-      });
+          resp.data.forEach(function(el) {
+            if(el.key === newApplicant.key) {
+              found = true;
+            }
+          });
+
+          assert.isTrue(found, 'the record exists');
+        });
+      }
     });
 
     afterEach(function() {
-      return Client.deleteApplicant(newApplicant.key).then(function(resp) {
-        assert.equal(resp.statusCode, 200, 'successfully deleted applicant');
-        return resp;
-      });
+      if(process.env.API_VERSION === 'v2') {
+        return Client.deleteApplicant(newApplicant.id).then(function(resp) {
+          expect(resp.statusCode).to.match(/^20(0|4)$/);
+          return resp;
+        });
+      } else {
+        return Client.deleteApplicant(newApplicant.key).then(function(resp) {
+          assert.equal(resp.statusCode, 200, 'successfully deleted applicant');
+          return resp;
+        });
+      }
     });
   });
 });
