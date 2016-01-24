@@ -109,11 +109,3 @@ describe('OnboardIQ', function() {
     });
   });
 });
-
-// client.listApplicants().then(function(resp) {
-// });
-
-// client.updateApplicant('1676b7488094580c', {
-//   name: 'Stephen'
-// }).then(function(resp) {
-// });
