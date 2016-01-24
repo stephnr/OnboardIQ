@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node test/onboardAPI.js"
+    "test": "mocha -R spec test"
   },
   "homepage": "https://github.com/Stephn-R/OnboardIQ",
   "bugs": {

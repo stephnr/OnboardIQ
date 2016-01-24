@@ -59,7 +59,7 @@ OnboardIQ.Client.prototype.listApplicants = function(params) {
 };
 
 OnboardIQ.Client.prototype.deleteApplicant = function(id, params) {
-  var uri = this.uri + '/applicants' + id;
+  var uri = this.uri + '/applicants/' + id;
   return this._constructPromiseRequest(uri, 'DELETE', params);
 };
 
