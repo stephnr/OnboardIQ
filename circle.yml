@@ -3,4 +3,4 @@ machine:
     version: 4.0.0
 test:
   override:
-    - npm test
+    - PRIVATE_API_KEY=$PRIVATE_API_KEY API_VERSION=$API_VERSION npm test
