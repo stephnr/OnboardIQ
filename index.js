@@ -122,7 +122,7 @@ function _handleAPIResponse(err, res, body, resolve, reject) {
     $body.data = body;
   }
 
-  if (!err && $body.statusCode === 200) {
+  if (!err && _.startsWith($body.statusCode, '2')) {
     resolve($body);
   } else {
     reject(err || new Error(body.message));
