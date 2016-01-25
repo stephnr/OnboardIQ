@@ -43,7 +43,11 @@ describe('OnboardIQ', function() {
         keys: 'that you might want'
       }).then(function(resp) {
         expect(resp.statusCode).to.match(/^20(0|1)$/);
-        newApplicant = resp.data;
+        if(process.env.API_VERSION === 'v2') {
+          newApplicant = resp;
+        } else {
+          newApplicant = resp.data;
+        }
         return newApplicant;
       });
     });
