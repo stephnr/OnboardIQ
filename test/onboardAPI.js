@@ -53,14 +53,14 @@ describe('OnboardIQ', function() {
         Client.updateApplicant(newApplicant.id, {
           name: 'John'
         }).then(function(applicant) {
-          assert.equal(applicant.data.name, 'John');
+          assert.equal(applicant.name, 'John');
           newApplicant = applicant;
         });
       } else {
         Client.updateApplicant(newApplicant.key, {
           name: 'John'
         }).then(function(applicant) {
-          assert.equal(applicant.data.name, 'John');
+          assert.equal(applicant.name, 'John');
           newApplicant = applicant;
         });
       }
@@ -83,7 +83,7 @@ describe('OnboardIQ', function() {
         Client.listApplicants().then(function(resp) {
           var found = false;
 
-          resp.data.forEach(function(el) {
+          resp.forEach(function(el) {
             if(el.key === newApplicant.key) {
               found = true;
             }
