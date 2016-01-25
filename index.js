@@ -122,7 +122,11 @@ function _handleAPIResponse(err, res, body, resolve, reject) {
     $body.data = body;
   }
 
-  return err ? reject(err) : resolve($body);
+  if (!err && $body.statusCode === 200) {
+    resolve($body);
+  } else {
+    reject(err || new Error(body.message));
+  }
 }
 
 /*=====  End of PRIVATE METHODS  ======*/
