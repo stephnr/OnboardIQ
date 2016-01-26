@@ -117,7 +117,7 @@ OnboardIQ.Client.prototype._authenticatedRequest = function(options, resolve, re
 function _handleAPIResponse(err, res, body, resolve, reject) {
   var $body = {};
 
-  if(res) {
+  if (res) {
     $body.statusCode = res.statusCode;
     $body.data = body;
   }
