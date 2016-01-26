@@ -34,7 +34,7 @@ describe('OnboardIQ', function() {
   describe('Applicants', function() {
     var newApplicant = {};
 
-    beforeEach(function() {
+    before(function() {
       return Client.addApplicant({
         name: 'Jake',
         email: 'jake@gmail.com',
@@ -43,11 +43,7 @@ describe('OnboardIQ', function() {
         keys: 'that you might want'
       }).then(function(resp) {
         expect(resp.statusCode).to.match(/^20(0|1)$/);
-        if(process.env.API_VERSION === 'v2') {
-          newApplicant = resp;
-        } else {
-          newApplicant = resp.data;
-        }
+        newApplicant = resp.data;
         return newApplicant;
       });
     });
@@ -56,16 +52,16 @@ describe('OnboardIQ', function() {
       if(process.env.API_VERSION === 'v2') {
         Client.updateApplicant(newApplicant.id, {
           name: 'John'
-        }).then(function(applicant) {
-          assert.equal(applicant.name, 'John');
-          newApplicant = applicant;
+        }).then(function(resp) {
+          assert.equal(resp.data.name, 'John');
+          newApplicant = resp.data;
         });
       } else {
         Client.updateApplicant(newApplicant.key, {
           name: 'John'
-        }).then(function(applicant) {
-          assert.equal(applicant.name, 'John');
-          newApplicant = applicant;
+        }).then(function(resp) {
+          assert.equal(resp.data.name, 'John');
+          newApplicant = resp.data;
         });
       }
     });
@@ -73,9 +69,12 @@ describe('OnboardIQ', function() {
     it('should be able to list applicants', function() {
       if(process.env.API_VERSION === 'v2') {
         Client.listApplicants().then(function(resp) {
+          console.log('LISTING');
+          console.log(resp);
           var found = false;
 
-          resp.applicants.forEach(function(el) {
+          resp.data.applicants.forEach(function(el) {
+            console.log(el);
             if(el.id === newApplicant.id) {
               found = true;
             }
@@ -85,9 +84,12 @@ describe('OnboardIQ', function() {
         });
       } else {
         Client.listApplicants().then(function(resp) {
+          console.log('LISTING');
+          console.log(resp);
           var found = false;
 
-          resp.forEach(function(el) {
+          resp.data.forEach(function(el) {
+            console.log(el);
             if(el.key === newApplicant.key) {
               found = true;
             }
@@ -98,7 +100,9 @@ describe('OnboardIQ', function() {
       }
     });
 
-    afterEach(function() {
+    after(function() {
+      // console.log(newApplicant);
+
       if(process.env.API_VERSION === 'v2') {
         return Client.deleteApplicant(newApplicant.id).then(function(resp) {
           expect(resp.statusCode).to.match(/^20(0|4)$/);
