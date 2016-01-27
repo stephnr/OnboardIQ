@@ -117,12 +117,16 @@ OnboardIQ.Client.prototype._authenticatedRequest = function(options, resolve, re
 function _handleAPIResponse(err, res, body, resolve, reject) {
   var $body = {};
 
-  if(res) {
+  if (res) {
     $body.statusCode = res.statusCode;
     $body.data = body;
   }
 
-  return err ? reject(err) : resolve($body);
+  if (!err && _.startsWith($body.statusCode, '2')) {
+    resolve($body);
+  } else {
+    reject(err || new Error(body.message));
+  }
 }
 
 /*=====  End of PRIVATE METHODS  ======*/
