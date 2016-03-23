@@ -75,9 +75,14 @@ OnboardIQ.Client.prototype.listApplicantsLabels = function(id) {
   return this._executeV2OnlyRequest(uri, 'GET', null);
 };
 
-OnboardIQ.Client.prototype.listApplicantsLabels = function(id, title, completed) {
+OnboardIQ.Client.prototype.updateApplicantsLabels = function(id, title, completed) {
   var uri = this.uri + '/applicants/' + id + '/labels/' + title;
   return this._executeV2OnlyRequest(uri, 'POST', {completed: completed});
+};
+
+OnboardIQ.Client.prototype.listStagesLabels = function(id) {
+  var uri = this.uri + '/stages/' + id + '/labels';
+  return this._executeV2OnlyRequest(uri, 'GET', null);
 };
 
 /*=====  End of V2 ONLY METHODS  ======*/
