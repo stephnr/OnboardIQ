@@ -75,6 +75,11 @@ OnboardIQ.Client.prototype.listApplicantsLabels = function(id) {
   return this._executeV2OnlyRequest(uri, 'GET', null);
 };
 
+OnboardIQ.Client.prototype.listApplicantsLabels = function(id, title, completed) {
+  var uri = this.uri + '/applicants/' + id + '/labels/' + title;
+  return this._executeV2OnlyRequest(uri, 'POST', {completed: completed});
+};
+
 /*=====  End of V2 ONLY METHODS  ======*/
 
 
