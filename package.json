@@ -1,5 +1,5 @@
 {
-  "name": "onboardiq",
+  "name": "@wegolook/onboardiq",
   "version": "1.0.3",
   "description": "A node.js client for the OnboardIQ API",
   "main": "index.js",
