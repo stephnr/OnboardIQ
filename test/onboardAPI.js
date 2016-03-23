@@ -89,8 +89,8 @@ describe('OnboardIQ', function() {
     it('should be able to update an applicants labels', function() {
       var key = process.env.API_VERSION === 'v2' ? newApplicant.id : newApplicant.key;
 
-      Client.updateApplicantsLabels(key, 'Example Label', true).then(function(resp) {
-        assert.equal(resp.data.title, 'Example Label');
+      Client.updateApplicantsLabels(key, 'Test Label', true).then(function(resp) {
+        assert.equal(resp.data.title, 'Test Label');
         newLabel = resp.data;
       });
     });

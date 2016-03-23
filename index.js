@@ -77,7 +77,7 @@ OnboardIQ.Client.prototype.listApplicantsLabels = function(id) {
 
 OnboardIQ.Client.prototype.updateApplicantsLabels = function(id, title, completed) {
   var uri = this.uri + '/applicants/' + id + '/labels/' + title;
-  return this._executeV2OnlyRequest(uri, 'POST', {completed: completed});
+  return this._executeV2OnlyRequest(uri, 'PUT', {completed: completed});
 };
 
 OnboardIQ.Client.prototype.listStagesLabels = function(id) {
