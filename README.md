@@ -46,6 +46,20 @@ Client.deleteApplicant(id);
 
 ```
 
+Some endpoints are only available if you are using OnboardIQ's v2 API
+
+```js
+// Lists all labels on the applicant
+Client.listApplicantsLabels(applicant_id);
+
+// Updates a specific label on an applicant
+Client.updateApplicantsLabels(applicant_id, label_title, is_completed);
+
+// Lists all labels on the stage
+Client.listStagesLabels(stage_id);
+
+```
+
 ## Callbacks
 
 All endpoints return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Below is a successful example on how to consume a Promise:
