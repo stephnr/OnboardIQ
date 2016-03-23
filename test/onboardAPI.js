@@ -117,29 +117,7 @@ describe('OnboardIQ', function() {
       });
     });
 
-    // TODO: implement stages tests
-    // it('should be able to list a stages labels', function() {
-    //   var stage_id = process.env.API_VERSION === 'v2' ? newStage.id : newStage.key;
-    //   var labels, key, found = false;
-    //
-    //   Client.listStagesLabels().then(function(resp) {
-    //     if(process.env.API_VERSION === 'v2') {
-    //       labels = resp.data.labels;
-    //       key = 'id';
-    //     } else {
-    //       labels = resp.data;
-    //       key = 'key';
-    //     }
-    //
-    //     labels.forEach(function(el) {
-    //       if(el[key] === newLabel[key]) {
-    //         found = true;
-    //       }
-    //     });
-    //
-    //     assert.isTrue(found, 'the record exists');
-    //   });
-    // });
+    // TODO: implement tests for Client.listStagesLabels()
 
     after(function() {
       var key = process.env.API_VERSION === 'v2' ? 'id' : 'key';
