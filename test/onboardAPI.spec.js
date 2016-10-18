@@ -8,9 +8,13 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 var should = require('chai').should();
 // Load API module
-var OnboardIQ = require('../index');
-// Load env props
-require('dotenv').config();
+var OnboardIQ = require('../');
+
+// Mock endpoint calls
+require('./mockEndpoints');
+
+// Mock data
+var mockApplicant = require('./mocks/applicant.json');
 
 /*=====  End of MODULES  ======*/
 
@@ -18,7 +22,7 @@ describe('OnboardIQ', function() {
   var Client = {};
 
   beforeEach(function() {
-    Client = new OnboardIQ.Client(process.env.PRIVATE_API_KEY, process.env.API_VERSION);
+    Client = new OnboardIQ.Client('XXX', 'v1');
   });
 
   describe('Methods', function() {
@@ -48,6 +52,12 @@ describe('OnboardIQ', function() {
       });
     });
 
+    it('should be able to fetch an applicant', function() {
+      Client.getApplicant(12).then(function(resp) {
+        assert.equal(resp.data, mockApplicant);
+      });
+    });
+
     it('should be able to update an applicant', function() {
       var key = process.env.API_VERSION === 'v2' ? newApplicant.id : newApplicant.key;
 
@@ -63,32 +73,14 @@ describe('OnboardIQ', function() {
       var applicants, key, found = false;
 
       Client.listApplicants().then(function(resp) {
-        if(process.env.API_VERSION === 'v2') {
-          applicants = resp.data.applicants;
-          key = 'id';
-        } else {
-          applicants = resp.data;
-          key = 'key';
-        }
-
-        applicants.forEach(function(el) {
-          if(el[key] === newApplicant[key]) {
-            found = true;
-          }
-        });
-
-        assert.isTrue(found, 'the record exists');
+        assert.exists(resp);
       });
     });
 
-    after(function() {
-      var key = process.env.API_VERSION === 'v2' ? 'id' : 'key';
-
-      return Client.deleteApplicant(newApplicant[key]).then(function(resp) {
-        expect(resp.statusCode).to.match(/^20(0|4)$/);
-        return resp;
+    it('should be able to delete an applicant', function() {
+      Client.deleteApplicant(12).then(function(resp) {
+        expect(resp.statusCode).to.match(/^20(0|1)$/);
       });
     });
-
   });
 });
