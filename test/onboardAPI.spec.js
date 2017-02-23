@@ -178,7 +178,21 @@ describe('OnboardIQ', function() {
         });
       });
 
-      // TODO: implement tests for Client.listStagesLabels()
+      it('should be able to list stages labels', function() {
+        var labels, key, found = false;
+        ClientV2.listStagesLabels(newApplicant.id).then(function(resp) {
+          labels = resp.data.labels;
+          key = 'id';
+
+          labels.forEach(function(el) {
+            if(el[key] === newLabel[key]) {
+              found = true;
+            }
+          });
+
+          assert.isTrue(found, 'the record exists');
+        });
+      });
     });
   });
 

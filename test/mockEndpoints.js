@@ -5,10 +5,12 @@ var rootURL = 'https://www.onboardiq.com/api';
 
 var mockApplicant = require('./mocks/applicant.json');
 var mockApplicantLabels = require('./mocks/applicantLabels.json');
+var mockStagesLabels = require('./mocks/stagesLabels.json');
 
 var APPLICANT_TEST_URL = /\/v1\/applicants\/[^(404)]*/;
-var APPLICANT_LABELS_TEST_URL = /\/v2\/applicants\/[^(404)].*\/labels/;
 var APPLICANT_V2_TEST_URL = /\/v2\/applicants\/[^(404)]*/;
+var APPLICANT_LABELS_TEST_URL = /\/v2\/applicants\/[^(404)].*\/labels/;
+var APPLICANT_STAGES_LABELS_TEST_URL = /\/v2\/stages\/[^(404)].*\/labels/;
 
 nock.disableNetConnect();
 
@@ -73,3 +75,7 @@ nock(rootURL)
 .reply(200, function(uri) {
   return mockApplicantLabels[0].title = uri.substring(uri.lastIndexOf('/'));
 });
+
+nock(rootURL)
+.get(APPLICANT_STAGES_LABELS_TEST_URL)
+.reply(200, mockStagesLabels);
