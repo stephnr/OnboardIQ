@@ -1,0 +1,40 @@
+{
+  "id": "e8e4edc5-096c-47ea-b682-f77c6c4462dd",
+  "email": "john@gmail.com",
+  "name": "John",
+  "phone_number": "5034834844",
+  "data": {
+    "any_other_parameter": "Toyota Prius"
+  },
+  "created_at": "2015-06-05T05:53:46.749-07:00",
+  "funnel": {
+    "id": "de79f80f-43da-4e4c-87d6-9bf714753535",
+    "title": "Corporate Security Facilitator"
+  },
+  "stage": {
+    "id": "4d09fca4-6599-4418-b385-6cf173e01b66",
+    "title": "Approved"
+  },
+  "background_checks": [
+    {
+      "title": "Driver license check",
+      "status": "pending",
+      "vendor": "checkr",
+      "candidate_id": "e44aa283528e6fde7d542194",
+      "report_id": "4722c07dd9a10c3985ae432a"
+    }
+  ],
+  "document_signatures": [
+    {
+      "vendor": "hellosign",
+      "signature_id": "123dfdsf",
+      "status": "signed"
+    }
+  ],
+  "labels": [
+    {
+      "title": "Label-0",
+      "completed": true
+    }
+  ]
+}
