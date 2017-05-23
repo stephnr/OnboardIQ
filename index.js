@@ -1,29 +1,26 @@
-'use strict';
+// ────────────────────────────────────────────────────────────────────────────────
+// MODULES
 
-/*===============================
-=            MODULES            =
-===============================*/
+const _ = require('lodash');
+const request = require('request');
+const Promise = require('bluebird');
 
-var _ = require('lodash');
-var request = require('request');
-var Promise = require('bluebird');
+// ────────────────────────────────────────────────────────────────────────────────
+// ONBOARD MODULE
 
-/*=====  End of MODULES  ======*/
+const OnboardIQ = module.exports = {};
 
-var OnboardIQ = module.exports = {};
+// ────────────────────────────────────────────────────────────────────────────────
+// CONSTRUCTOR
 
-/*===================================
-=            CONSTRUCTOR            =
-===================================*/
-
-OnboardIQ.Client = function(apiToken, env) {
-  if(_.isNil(apiToken)) {
+OnboardIQ.Client = (apiToken, env) => {
+  if (_.isNil(apiToken)) {
     throw new Error('Missing OnboardIQ API Token');
   }
 
-  if(_.isNil(env)) {
+  if (_.isNil(env)) {
     throw new Error('Missing OnboardIQ API Version');
-  } else if(!env.match(/^(v1|v2)$/)) {
+  } else if (!env.match(/^(v1|v2)$/)) {
     throw new Error('Invalid version for OnboardIQ API');
   }
 
@@ -32,97 +29,84 @@ OnboardIQ.Client = function(apiToken, env) {
   this.uri = 'https://www.onboardiq.com/api/' + env;
 };
 
-/*=====  End of CONSTRUCTOR  ======*/
+// ────────────────────────────────────────────────────────────────────────────────
+// SHARED API METHODS
 
-
-/*==========================================
-=            SHARED API METHODS            =
-==========================================*/
-
-OnboardIQ.Client.prototype.getApplicant = function(id, params) {
+OnboardIQ.Client.prototype.getApplicant = (id, params) => {
   var uri = this.uri + '/applicants/' + id;
   return this._constructPromiseRequest(uri, 'GET', params);
 };
 
-OnboardIQ.Client.prototype.addApplicant = function(params) {
+OnboardIQ.Client.prototype.addApplicant = (params) => {
   var uri = this.uri + '/applicants/';
   return this._constructPromiseRequest(uri, 'POST', params);
 };
 
-OnboardIQ.Client.prototype.updateApplicant = function(id, params) {
+OnboardIQ.Client.prototype.updateApplicant = (id, params) => {
   var uri = this.uri + '/applicants/' + id;
   return this._constructPromiseRequest(uri, 'PUT', params);
 };
 
-OnboardIQ.Client.prototype.listApplicants = function() {
+OnboardIQ.Client.prototype.listApplicants = () => {
   var uri = this.uri + '/applicants/';
   return this._constructPromiseRequest(uri, 'GET', null);
 };
 
-OnboardIQ.Client.prototype.deleteApplicant = function(id) {
+OnboardIQ.Client.prototype.deleteApplicant = (id) => {
   var uri = this.uri + '/applicants/' + id;
   return this._constructPromiseRequest(uri, 'DELETE', null);
 };
 
-/*=====  End of SHARED API METHODS  ======*/
+// ────────────────────────────────────────────────────────────────────────────────
+// V2 ONLY METHODS
 
-/*=======================================
-=            V2 ONLY METHODS            =
-=======================================*/
-
-OnboardIQ.Client.prototype.listApplicantsLabels = function(id) {
+OnboardIQ.Client.prototype.listApplicantsLabels = (id) => {
   var uri = this.uri + '/applicants/' + id + '/labels';
   return this._executeV2OnlyRequest(uri, 'GET', null);
 };
 
-/*=====  End of V2 ONLY METHODS  ======*/
+// ────────────────────────────────────────────────────────────────────────────────
+// PRIVATE METHODS
 
-
-/*=======================================
-=            PRIVATE METHODS            =
-=======================================*/
-
-OnboardIQ.Client.prototype._executeV2OnlyRequest = function(uri, method, params) {
-  if(this.env === 'v1') {
+OnboardIQ.Client.prototype._executeV2OnlyRequest = (uri, method, params) => {
+  if (this.env === 'v1') {
     throw new Error('Attempted to access a v2 only API endpoint');
   } else {
     return this._constructPromiseRequest(uri, method, params);
   }
 };
 
-OnboardIQ.Client.prototype._constructPromiseRequest = function(uri, method, params) {
+OnboardIQ.Client.prototype._constructPromiseRequest = (uri, method, params) => {
   var Client = this;
 
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     Client._authenticatedRequest({
-      uri:    uri,
+      uri: uri,
       method: method,
-      body:   params
+      body: params
     }, resolve, reject);
   });
 };
 
-OnboardIQ.Client.prototype._authenticatedRequest = function(options, resolve, reject) {
+OnboardIQ.Client.prototype._authenticatedRequest = (options, resolve, reject) => {
   request({
-    uri:    options.uri,
+    uri: options.uri,
     method: options.method,
     json: _.extend({
       api_token: this.apiToken
     }, options.body)
-  }, function(err, res, body) {
+  }, (err, res, body) => {
     _handleAPIResponse(err, res, body, resolve, reject);
   });
 };
 
-function _handleAPIResponse(err, res, body, resolve, reject) {
+function _handleAPIResponse (err, res, body, resolve, reject) {
   var $body = {};
 
-  if(res) {
+  if (res) {
     $body.statusCode = res.statusCode;
     $body.data = body;
   }
 
   return err ? reject(err) : resolve($body);
 }
-
-/*=====  End of PRIVATE METHODS  ======*/
