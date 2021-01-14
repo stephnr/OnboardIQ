@@ -1,7 +1,7 @@
 'use strict';
 
 var nock = require('nock');
-var rootURL = 'https://www.onboardiq.com/api';
+var rootURL = 'https://api.fountain.com';
 
 var mockApplicant = require('./mocks/applicant.json');
 var mockApplicantLabels = require('./mocks/applicantLabels.json');
