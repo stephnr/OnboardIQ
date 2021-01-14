@@ -26,7 +26,7 @@ OnboardIQ.Client = (apiToken, env) => {
 
   this.env = env;
   this.apiToken = apiToken;
-  this.uri = 'https://www.onboardiq.com/api/' + env;
+  this.uri = 'https://api.fountain.com/' + env;
 };
 
 // ────────────────────────────────────────────────────────────────────────────────
